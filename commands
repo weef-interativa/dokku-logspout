@@ -31,7 +31,6 @@ do_run() {
   HOSTNAME="$(f_gethostname)"
   CID=$(docker run --name="logspout-newrelic" \
       --volume=/var/run/docker.sock:/tmp/docker.sock \
-      --publish=127.0.0.1:80 \
       --restart=unless-stopped \
       --hostname=${HOSTNAME} \
       --env-file=${DOKKU_LOGSPOUT_ROOT}/ENV \
