@@ -26,17 +26,16 @@ f_gethostname() {
 }
 
 do_run() {
-  local CID HOSTNAME DOKKU_LOGSPOUT_SYSLOG_SERVER=${DOKKU_LOGSPOUT_SYSLOG_SERVER:-"syslog://"}
-  HOSTNAME="$(f_gethostname)"
   # shellcheck disable=SC2086
-  CID=$(docker run -d --name="logspout" \
-        --volume=/var/run/docker.sock:/tmp/docker.sock \
-        --publish=127.0.0.1:${DOKKU_LOGSPOUT_PORT}:80 \
-        --restart=unless-stopped \
-        --hostname=${HOSTNAME} \
-        --env-file=${DOKKU_LOGSPOUT_ROOT}/ENV \
-        ${DOKKU_LOGSPOUT_IMAGE}:${DOKKU_LOGSPOUT_IMAGE_VERSION} \
-        $DOKKU_LOGSPOUT_SYSLOG_SERVER)
+  local CID HOSTNAME
+  HOSTNAME="$(f_gethostname)"
+  CID=$(docker run --name="logspout-newrelic" \
+      --volume=/var/run/docker.sock:/tmp/docker.sock \
+      --publish=127.0.0.1:${DOKKU_LOGSPOUT_PORT}:80 \
+      --restart=unless-stopped \
+      --hostname=${HOSTNAME} \
+      --env-file=${DOKKU_LOGSPOUT_ROOT}/ENV \
+      weef/logspout-newrelic:latest)
   echo "$CID" > "$DOKKU_LOGSPOUT_ROOT/CONTAINER"
 }
 
