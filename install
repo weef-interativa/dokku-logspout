@@ -23,7 +23,7 @@ install_cmd() {
   chown -R dokku:dokku "$DOKKU_LOGSPOUT_ROOT"
 
   source "$DOKKU_LOGSPOUT_OPTIONS"
-  docker pull "${DOKKU_LOGSPOUT_IMAGE}:${DOKKU_LOGSPOUT_IMAGE_VERSION}"
+  docker pull "${DOKKU_LOGSPOUT_IMAGE}:latest"
 }
 
 install_cmd "$@"
