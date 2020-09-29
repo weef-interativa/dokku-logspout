@@ -26,7 +26,7 @@ f_gethostname() {
 }
 
 do_run() {
-  local CID HOSTNAME DOKKU_LOGSPOUT_SYSLOG_SERVER=${DOKKU_LOGSPOUT_SYSLOG_SERVER:-"syslog://"}
+  local CID HOSTNAME
   HOSTNAME="$(f_gethostname)"
   # shellcheck disable=SC2086
   CID=$(docker run -d --name="logspout" \
@@ -35,8 +35,7 @@ do_run() {
         --restart=unless-stopped \
         --hostname=${HOSTNAME} \
         --env-file=${DOKKU_LOGSPOUT_ROOT}/ENV \
-        gliderlabs/logspout:${DOKKU_LOGSPOUT_IMAGE_VERSION} \
-        $DOKKU_LOGSPOUT_SYSLOG_SERVER)
+        weef/logspout-newrelic:latest)
   echo "$CID" > "$DOKKU_LOGSPOUT_ROOT/CONTAINER"
 }
 
@@ -156,7 +155,7 @@ logspout_update_cmd() {
 
   logspout_stop_cmd
   logspout_destroy_cmd
-  docker pull "gliderlabs/logspout:${DOKKU_LOGSPOUT_IMAGE_VERSION}"
+  docker pull "weef/logspout-newrelic:latest"
   logspout_start_cmd
 }
 
