@@ -32,6 +32,7 @@ do_run() {
   CID=$(docker run -d --name="logspout" \
         --volume=/var/run/docker.sock:/tmp/docker.sock \
         --publish=127.0.0.1:${DOKKU_LOGSPOUT_PORT}:80 \
+        -e EXCLUDE_LABEL="/logspout" \
         --restart=unless-stopped \
         --hostname=${HOSTNAME} \
         --env-file=${DOKKU_LOGSPOUT_ROOT}/ENV \

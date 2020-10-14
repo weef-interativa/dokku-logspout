@@ -17,7 +17,7 @@ dokku plugins-install
 ```
 ```
 # dokku 0.4.x
-$ dokku plugin:install https://github.com/michaelshobbs/dokku-logspout.git
+$ dokku plugin:install https://github.com/weef-interativa/dokku-logspout.git
 ```
 
 ### Customization
